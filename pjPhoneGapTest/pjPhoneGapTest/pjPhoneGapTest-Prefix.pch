@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'pjPhoneGapTest' target in the 'pjPhoneGapTest' project
-//
-
-#ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-#endif

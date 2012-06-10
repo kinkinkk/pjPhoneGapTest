@@ -1,84 +1,126 @@
 <!DOCTYPE html>
 <html>
+<head>
+<title>テストタイトル</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+<meta charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8" src="plugins/cordova-1.8.0.js"></script>
+<script type="text/javascript" charset="utf-8" src="plugins/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
 <!--
-#
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-# 
-# http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-#
+
+	// bodyのオンロード時
+	$(document).ready(function() 
+	{
+		const DB_NAME = "DEMO"
+	
+		// DBObject
+		var objDB = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+		
+		document.addEventListener("deviceready", function()
+		{
+			// DB接続
+			
+			if (objDB) 
+			{
+				// データベースの作成 
+				tranQeury('CREATE TABLE IF NOT EXISTS $DB (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, data not null)');
+			
+			}
+			else
+			{
+				alert("データベースストレージが使えません。");
+			}
+		});
+		
+
+		// テーブル参照
+		$('#sel_table').click(function()
+		{
+			tranQeury('SELECT * FROM $DB', function(tx, results)
+			{
+				$('#disp_table').empty();
+				
+				for (var i=0; i < results.rows.length; i++)
+				{
+					$('#disp_table').append(
+						"|" + results.rows.item(i).id + 
+						"|" + results.rows.item(i).data + "<br />");
+				}
+				// select文によって返される行数
+				alert(results.rows.length + "行が見つかりました。");
+				
+			});
+		});
+		
+		
+		// テーブル追加
+		$('#ins_table').click(function()
+		{
+			tranQeury('INSERT INTO $DB (data) VALUES ("' + $('#target_text').val() + '")');
+		});		
+		
+		// テーブル削除
+		$('#del_table').click(function()
+		{
+			tranQeury('DELETE FROM $DB WHERE data = "' + $('#target_text').val() + '"');
+
+		});
+		
+		// SQL実行
+		function tranQeury(sql, endedMethod)
+		{
+		
+			objDB.transaction(
+				// SQLを実行
+				function(tx)
+				{
+					sql = sql.replace(/\$DB/g, DB_NAME); 
+					
+					if (endedMethod != null)
+					{
+						tx.executeSql(sql, [], endedMethod);
+					}
+					else
+					{
+						tx.executeSql(sql);
+					}
+					
+				}, 
+				
+				// 異常時
+				function (err)
+				{
+					console.log(err);
+					alert("エラーが発生しました。");
+				}, 
+				// 成功時
+				function ()
+				{
+					//alert("成功しました。");
+				}
+			);
+		}
+		
+	});    
 -->
-  <head>
-  <title></title>
-  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
-	<meta charset="utf-8">
+</script>
+</head>
+<body>
 
-
-	<!-- iPad/iPhone specific css below, add after your main css >
-	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
-	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
-	-->
-	<!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
-	<script type="text/javascript" charset="utf-8" src="cordova-1.8.0.js"></script>
-    <script type="text/javascript">
-
-
-	// If you want to prevent dragging, uncomment this section
-	/*
-	function preventBehavior(e) 
-	{ 
-      e.preventDefault(); 
-    };
-	document.addEventListener("touchmove", preventBehavior, false);
-	*/
+	<center>
+    <h1>(´Д`)</h1>
+    </center>
 	
-	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-	for more details -jm */
-	/*
-	function handleOpenURL(url)
-	{
-		// TODO: do something with the url passed in.
-	}
-	*/
+    <form>
+        テキスト:<input type='text' id='target_text' /><br />
+        <input type='button' value='表示' id='sel_table'/> 
+        <input type='button' value='追加' id='ins_table'/> 
+        <input type='button' value='削除' id='del_table'/>
+    </form>
+	<div id='disp_table'></div>
 	
-	function onBodyLoad()
-	{		
-		document.addEventListener("deviceready", onDeviceReady, false);
-	}
-	
-	/* When this function is called, Cordova has been initialized and is ready to roll */
-	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-	for more details -jm */
-	function onDeviceReady()
-	{
-		// do your thing!
-		navigator.notification.alert("コーダバ　ふぉんぎゃっぷ")
-	}
-    
-    </script>
-  </head>
-  <body onload="onBodyLoad()">
-	<h1>うひゃあああもういや(´Д`)</h1>
-	<p>Don't know how to get started? Check out our <em><a target="_blank" href="http://docs.phonegap.com/en/edge/guide_getting-started_ios_index.md.html#Getting%20Started%20with%20iOS">Getting Started Guide</a></em>
 	<br />
-	<ol>
-		<li>Check your console log for any white-list rejection errors.</li>
-		<li>Add your allowed <strong>hosts</strong> in Cordova.plist/ExternalHosts (wildcards OK, don't enter the URL scheme)</li>
-	</ol>
   </body>
 </html>

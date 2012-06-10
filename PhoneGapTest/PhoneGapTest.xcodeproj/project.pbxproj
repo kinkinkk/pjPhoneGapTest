@@ -36,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A654A62158337B800CA09FE /* PhoneGapTest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PhoneGapTest copy-Info.plist"; path = "/Users/kanazawa/Documents/pjPhoneGapTest/PhoneGapTest/PhoneGapTest copy-Info.plist"; sourceTree = "<absolute>"; };
 		2A7DBA3D1582EC9D00E25A2D /* PhoneGapTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneGapTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A7DBA411582EC9D00E25A2D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2A7DBA431582EC9D00E25A2D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -110,6 +111,7 @@
 				2A7DBA5B1582EC9D00E25A2D /* PhoneGapTest */,
 				2A7DBA401582EC9D00E25A2D /* Frameworks */,
 				2A7DBA3E1582EC9D00E25A2D /* Products */,
+				2A654A62158337B800CA09FE /* PhoneGapTest copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -371,6 +373,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -391,6 +394,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -414,6 +418,7 @@
 					"DEBUG=1,",
 					"CORDOVA_FRAMEWORK=1",
 				);
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "PhoneGapTest/PhoneGapTest-Info.plist";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
@@ -443,6 +448,7 @@
 					"NDEBUG=1,",
 					"CORDOVA_FRAMEWORK=1",
 				);
+				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "PhoneGapTest/PhoneGapTest-Info.plist";
 				OTHER_LDFLAGS = (
 					"-weak_framework",

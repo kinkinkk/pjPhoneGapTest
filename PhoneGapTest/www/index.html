@@ -36,7 +36,7 @@
 		
 
 		// テーブル参照
-		$('#sel_table').click(function()
+		function selectDatas()
 		{
 			tranQeury('SELECT * FROM $DB', function(tx, results)
 			{
@@ -49,23 +49,34 @@
 						"|" + results.rows.item(i).data + "<br />");
 				}
 				// select文によって返される行数
-				alert(results.rows.length + "行が見つかりました。");
+				//alert(results.rows.length + "行が見つかりました。");
 				
 			});
-		});
+		}
 		
 		
 		// テーブル追加
 		$('#ins_table').click(function()
 		{
 			tranQeury('INSERT INTO $DB (data) VALUES ("' + $('#target_text').val() + '")');
-		});		
+		});
+		
 		
 		// テーブル削除
 		$('#del_table').click(function()
 		{
 			tranQeury('DELETE FROM $DB WHERE data = "' + $('#target_text').val() + '"');
+		});
 
+		// エンターキーを押したときの挙動
+		$('#target_text').keypress(function (e) 
+		{
+			if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) 
+			{
+				// 追加ボタンをクリック
+				$('#ins_table').click();
+				return false;
+			}
 		});
 		
 		// SQL実行
@@ -78,15 +89,7 @@
 				{
 					sql = sql.replace(/\$DB/g, DB_NAME); 
 					
-					if (endedMethod != null)
-					{
-						tx.executeSql(sql, [], endedMethod);
-					}
-					else
-					{
-						tx.executeSql(sql);
-					}
-					
+					tx.executeSql(sql, [], endedMethod);
 				}, 
 				
 				// 異常時
@@ -101,8 +104,13 @@
 					//alert("成功しました。");
 				}
 			);
+			
+			if (endedMethod === undefined)
+			{
+				selectDatas();
+			}
 		}
-		
+		selectDatas();		
 	});    
 -->
 </script>
@@ -114,10 +122,9 @@
     </center>
 	
     <form>
-        テキスト:<input type='text' id='target_text' /><br />
-        <input type='button' value='表示' id='sel_table'/> 
-        <input type='button' value='追加' id='ins_table'/> 
-        <input type='button' value='削除' id='del_table'/>
+        テキスト:<input type='text' id='target_text' />
+		<input type='button' value='追加' id='ins_table'/><input type='button' value='削除' id='del_table'/>
+		<input type='button' value='追加' id='ins_table'/><input type='button' value='削除' id='del_table'/>
     </form>
 	<div id='disp_table'></div>
 	
